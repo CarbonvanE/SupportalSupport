@@ -9,8 +9,5 @@ Simple workflow program to simplify searching within the Supportal database.
 ## Use
 1. Select text and right click within Chrome (the workflow only works within Chrome for now)
 2. Select SupportalSupport (this will instantly load the webpage in the background)
-3. Select "Let's go!" or press enter if the search query is correct (his will redirect you to the Supportal webpage)
+3. Select "Let's go!" or press enter if the search query is correct (this will redirect you to the Supportal webpage)
 4. The selected text will automatically get copied to the clipboard
-
-## Tips
-TODO
