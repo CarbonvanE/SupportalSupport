@@ -14,4 +14,4 @@ Simple workflow program to simplify searching within the Supportal database.
 5. The selected text will automatically get copied to the clipboard
 
 ## Tips
-Remove some unnecesary services (e.g. `Add to iTunes as a spoken track`) to make the SupportalSupport service more accesible. This can be done in `System preferences` under `Keyboard` -> `Shortcuts` -> `Services`. 
+Remove some unnecesary services (e.g. "Add to iTunes as a spoken track") to make the SupportalSupport service more accesible. This can be done in `System preferences` -> `Keyboard` -> `Shortcuts` -> `Services`. 
