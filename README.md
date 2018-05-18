@@ -8,6 +8,10 @@ Simple workflow program to simplify searching within the Supportal database.
 
 ## Use
 1. Select text and right click within Chrome (the workflow only works within Chrome for now)
-2. Select SupportalSupport (this will instantly load the webpage in the background)
-3. Select "Let's go!" or press enter if the search query is correct (this will redirect you to the Supportal webpage)
-4. The selected text will automatically get copied to the clipboard
+2. Select SupportalSupport from the dropdown menu (or Services -> SupportalSupport if there are too many services to show in the dropdown menu)
+3. The webpage will already start loading in the background)
+4. Select "Let's go!" or press enter if the search query is correct (this will redirect you to the Supportal webpage)
+5. The selected text will automatically get copied to the clipboard
+
+## Tips
+Remove some unnecesary services (e.g. `Add to iTunes as a spoken track`) to make the SupportalSupport service more accesible. This can be done in `System preferences` under `Keyboard` -> `Shortcuts` -> `Services`. 
