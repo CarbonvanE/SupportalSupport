@@ -1,4 +1,4 @@
-# WARNING: This is version two and not yet ready for use!
+# WARNING: This is version 2 and not yet ready for use!
 
 # SupportalSupport
 Simple workflow program to simplify searching within the Supportal database.
