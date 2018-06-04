@@ -116,7 +116,7 @@ function getStorage() {
         // Check if a list has been stored
         if (users === undefined) {
             initializeStorage("lastUsers", 7);
-            getStorage();
+            console.log('Storage not yet initialised');
             return;
         } else {
             for (let u = 0; u < users.length; u++) {

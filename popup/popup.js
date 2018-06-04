@@ -28,20 +28,17 @@ function updatePopup(user, tab) {
 // Update tabs
 chrome.storage.local.get(['lastUsers'], function(userList) {
     let users = userList['lastUsers'];
+    console.log(userList)
     // Create a list with all display names
     let displayNames = [];
     for (let u = 0; u < users.length; u++) {
         displayNames.push(users[u]['userID']);
     };
-    if (typeof users[0] !== 'undefined') {
-        updatePopup(users[0], 1);
-        goToSupportal();
-        for (let i = 0; i < displayNames.length; i++) {
-            document.querySelector(".tab" + (i + 1)).innerHTML = getIcon(users[i], "") + displayNames[i];
-        };
-    } else {
-        alert("No userdata was found.");
+    updatePopup(users[0], 1);
+    for (let i = 0; i < displayNames.length; i++) {
+        document.querySelector(".tab" + (i + 1)).innerHTML = getIcon(users[i], "") + displayNames[i];
     };
+    goToSupportal();
 });
 
 
@@ -81,7 +78,9 @@ function goToSamePage(e) {
         let tabID = -1;
         // Find the last open Supportal tab
         for (let i = 0; i < tabs.length; i++) {
-            if (tabs[i]["url"].startsWith("https://supportal2.blendle.io/")) {
+            if (tabs[i]["url"] === newURL) {
+                chrome.tabs.update(tabs[i]["id"], {selected: true});
+            } else if (tabs[i]["url"].startsWith("https://supportal2.blendle.io/")) {
                 chrome.tabs.update(tabs[i]["id"], {url: newURL, selected: true});
                 return;
             };
@@ -100,7 +99,7 @@ function goToNewPage(e) {
 // Get the appropriate icon for each user
 function getIcon(user, size) {
     if (user.reads > 500) {
-        `<i class="fas fa-user-astronaut ${size}"></i>`;
+        return `<i class="fas fa-user-astronaut ${size}"></i>`;
     } else if (user.reads < 5) {
         return `<i class="fas fa-child ${size}"></i>`;
     } else if (user.activeSubs > 0 && user.inactiveSubs > 0) {

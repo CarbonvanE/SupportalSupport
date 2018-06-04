@@ -49,6 +49,7 @@ chrome.runtime.onMessage.addListener(
             setTimeout(function() {
                 clearInterval(flicker);
                 chrome.browserAction.setIcon({path: "icons/grey/icon_16.png"});
+                // chrome.browserAction.setBadgeText({text: "abc"});
             }, 2500);
         };
     }
