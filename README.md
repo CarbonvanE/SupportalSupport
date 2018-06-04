@@ -1,17 +1,14 @@
 # SupportalSupport
-Simple workflow program to simplify searching within the Supportal database.
+Simple Chrome extension to simplify searching within the Supportal database.
 
-## Installation
-1. Download the ZIP file
-2. Unzip the folder (this might happen automatically)
-3. Put the Workflow file into the folder "Users/[your username]/Library/Services". If the folder 'Library' does not show up in the folder [username] use the key combination `'command' + 'shift' + '.'` to show all hidden folders. (the same combination can be used to hide the hidden folders again, when you've moved the file)
+## Installation (temporary)
+1. Download the repository
+2. Go to `chrome://extensions/`
+3. Click `load unpacked`
 
 ## Use
-1. Select text and right click within Chrome (the workflow only works within Chrome for now)
-2. Select SupportalSupport from the dropdown menu (or Services -> SupportalSupport if there are too many services to show in the dropdown menu)
-3. The webpage will already start loading in the background)
-4. Select "Let's go!" or press enter if the search query is correct (this will redirect you to the Supportal webpage)
-5. The selected text will automatically get copied to the clipboard
-
-## Tips
-If you have to click 'services' before you see the plugin you could remove some unnecesary services from this menu (e.g. "Add to iTunes as a spoken track") to make the SupportalSupport service more accesible. This can be done in `System preferences` -> `Keyboard` -> `Shortcuts` -> `Services`. 
+1. Select text and right click within Chrome
+2. Select SupportalSupport from the dropdown menu
+3. The selected text will automatically get copied to the clipboard
+4. The icon in the toolbar will flicker for a few seconds when the page is loaded
+5. Click the icon in the toolbar to get a summary and to open the page
