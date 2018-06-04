@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 250px;
+    margin-bottom: 15px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 13.5px;
+    line-height: 1.5em;
+    background-color: whitesmoke;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+/* Menu */
+div.scrollMenu {
+    height: 30px;
+    line-height: 30px;
+    overflow: auto;
+    white-space: nowrap;
+    background-color: lightgrey;
+}
+
+div.scrollMenu .tab {
+    display: inline-block;
+    text-align: center;
+    padding: 0 10px;
+    font-size: 0.9em;
+}
+
+div.scrollMenu .tab:hover {
+    cursor: pointer;
+    color: rgb(70,70,70);
+}
+
+div.scrollMenu .tabSelected {
+    background-color: whitesmoke;
+    font-weight: 600;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+
+/* Parts */
+.part {
+    padding: 10px;
+    margin: 10px;
+
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+
+.upper {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    margin-right: 10px;
+}
+
+.nameAndSaldo {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+#saldo {
+    margin-left: 10px;
+    padding: 2px 7px;
+    background-color: lightgrey;
+    border-radius: 5px;
+}
+
+#connected {
+    font-style: italic;
+}
+
+td, table{
+    border-spacing: 0;
+}
+
+.isZero {
+    color: rgb(150,150,150);
+}
+
+
+
+/* Open supportal options */
+.openSupportal {
+    display: flex;
+    justify-content: space-between;
+    height: 35px;
+    line-height: 35px;
+}
+
+.newTab,
+.sameTab {
+    text-align: center;
+    flex: 1;
+    border: solid 1px lightgrey;
+    border-radius: 5px;
+}
+
+.newTab:hover,
+.sameTab:hover {
+    background-color: lightgrey;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.newTab {
+    margin-right: 10px;
+    margin-left: 4px;
+}
+
+.sameTab {
+    margin-left: 10px;
+    margin-right: 4px;
+}
+
+
+
+/* Icons */
+.fas,
+.far {
+    margin-right: 3px;
+}
+
+.fa-2x {
+    color: rgb(70,70,70);
+}

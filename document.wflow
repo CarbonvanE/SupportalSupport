@@ -1,134 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>AMApplicationBuild</key>
-	<string>444.7</string>
-	<key>AMApplicationVersion</key>
-	<string>2.8</string>
-	<key>AMDocumentVersion</key>
-	<string>2</string>
-	<key>actions</key>
-	<array>
-		<dict>
-			<key>action</key>
-			<dict>
-				<key>AMAccepts</key>
-				<dict>
-					<key>Container</key>
-					<string>List</string>
-					<key>Optional</key>
-					<true/>
-					<key>Types</key>
-					<array>
-						<string>com.apple.applescript.object</string>
-					</array>
-				</dict>
-				<key>AMActionVersion</key>
-				<string>1.0.2</string>
-				<key>AMApplication</key>
-				<array>
-					<string>Automator</string>
-				</array>
-				<key>AMParameterProperties</key>
-				<dict>
-					<key>source</key>
-					<dict/>
-				</dict>
-				<key>AMProvides</key>
-				<dict>
-					<key>Container</key>
-					<string>List</string>
-					<key>Types</key>
-					<array>
-						<string>com.apple.applescript.object</string>
-					</array>
-				</dict>
-				<key>ActionBundlePath</key>
-				<string>/System/Library/Automator/Run AppleScript.action</string>
-				<key>ActionName</key>
-				<string>Run AppleScript</string>
-				<key>ActionParameters</key>
-				<dict>
-					<key>source</key>
-					<string>on run {input, parameters}	-- Clean up input	set searchQuery to first item of input	set searchQuery to replaceChars(searchQuery, "@", "%40")	set searchQuery to replaceChars(searchQuery, " ", "+")		-- Create new URL for GET request	set newURL to "https://supportal2.blendle.io/search?query=" &amp; searchQuery		-- Find the open Supportal tab and make the GET request	tell application "Google Chrome"		tell its window 1			set tabNumber to count of tabs			set tabList to every tab			set reversedTabList to reverse of tabList						-- Loop through all tabs and check which Supportal tab is already open			repeat with theTab in reversedTabList				set theURL to the URL of theTab				if {theURL starts with "https://supportal2.blendle.io"} then					set URL of tab tabNumber to newURL					exit repeat				end if				set tabNumber to {tabNumber - 1}			end repeat			-- If Supportal is not open in any tab, open a new tab			if {tabNumber is equal to [0]} then				set newTab to make new tab at end of tabs				set URL of newTab to newURL				set tabNumber to count of tabs			end if		end tell	end tell		-- Display a message and go to Supportal tab if the okay is returned	display dialog input buttons {"Aah, wrong query.", "Let's go!"} default button "Let's go!" with icon file (("Users:" &amp; (do shell script "echo $USER") &amp; ":Library:Services:SupportalSupport.workflow:Contents:Resources:") &amp; "icon.icns")	if button returned of result = "Let's go!" then		tell application "Google Chrome" to set active tab index of first window to tabNumber		set the clipboard to first item of input	end ifend run-- Replaces certain characters in a given stringon replaceChars(mailAddress, toReplace, replaceWith)	set AppleScript's text item delimiters to toReplace	set the itemList to every text item of mailAddress	set AppleScript's text item delimiters to replaceWith	set thisText to the itemList as string	set AppleScript's text item delimiters to ""	return thisTextend replaceChars</string>
-				</dict>
-				<key>BundleIdentifier</key>
-				<string>com.apple.Automator.RunScript</string>
-				<key>CFBundleVersion</key>
-				<string>1.0.2</string>
-				<key>CanShowSelectedItemsWhenRun</key>
-				<false/>
-				<key>CanShowWhenRun</key>
-				<true/>
-				<key>Category</key>
-				<array>
-					<string>AMCategoryUtilities</string>
-				</array>
-				<key>Class Name</key>
-				<string>RunScriptAction</string>
-				<key>InputUUID</key>
-				<string>001F628C-02E2-42A2-9F71-597A2B08DA1A</string>
-				<key>Keywords</key>
-				<array>
-					<string>Run</string>
-				</array>
-				<key>OutputUUID</key>
-				<string>D987AC10-A142-48E3-88B6-6C6788D283A1</string>
-				<key>UUID</key>
-				<string>5A3DBEC7-2F9C-409E-9191-DCDFD2F55271</string>
-				<key>UnlocalizedApplications</key>
-				<array>
-					<string>Automator</string>
-				</array>
-				<key>arguments</key>
-				<dict>
-					<key>0</key>
-					<dict>
-						<key>default value</key>
-						<string>on run {input, parameters}
-	
-	(* Your script goes here *)
-	
-	return input
-end run</string>
-						<key>name</key>
-						<string>source</string>
-						<key>required</key>
-						<string>0</string>
-						<key>type</key>
-						<string>0</string>
-						<key>uuid</key>
-						<string>0</string>
-					</dict>
-				</dict>
-				<key>isViewVisible</key>
-				<true/>
-				<key>location</key>
-				<string>580.500000:776.000000</string>
-				<key>nibPath</key>
-				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
-			</dict>
-			<key>isViewVisible</key>
-			<true/>
-		</dict>
-	</array>
-	<key>connectors</key>
-	<dict/>
-	<key>workflowMetaData</key>
-	<dict>
-		<key>serviceApplicationBundleID</key>
-		<string>com.google.Chrome</string>
-		<key>serviceApplicationPath</key>
-		<string>/Applications/Google Chrome.app</string>
-		<key>serviceInputTypeIdentifier</key>
-		<string>com.apple.Automator.text</string>
-		<key>serviceOutputTypeIdentifier</key>
-		<string>com.apple.Automator.nothing</string>
-		<key>serviceProcessesInput</key>
-		<integer>0</integer>
-		<key>workflowTypeIdentifier</key>
-		<string>com.apple.Automator.servicesMenu</string>
-	</dict>
-</dict>
-</plist>
