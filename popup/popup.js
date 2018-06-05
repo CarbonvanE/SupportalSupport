@@ -24,7 +24,7 @@ function updatePopup(user, tab) {
     document.querySelector("#inactiveSubs").textContent = isItSingle(user.inactiveSubs, "inactive subscription", "");
 
     if (user.kindOfSub === "blendle") {
-        document.querySelector("#endOfSub").style.background = "coral";
+        document.querySelector("#endOfSub").style.background = "darkorange";
         document.querySelector("#endOfSub").style.color = "white";
     } else if (user.kindOfSub === "stripe") {
         document.querySelector("#endOfSub").style.background = "deepskyblue";
