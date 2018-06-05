@@ -31,5 +31,14 @@
         "128": "icons/color/icon_128.png",
         "256": "icons/grey/icon_256.png",
         "512": "icons/grey/icon_512.png"
+    },
+    "commands": {
+        "_execute_browser_action": {
+            "suggested_key": {
+                "default": "Ctrl+E",
+                "mac": "Command+E"
+            },
+            "description": "Open extension"
+        }
     }
 }
