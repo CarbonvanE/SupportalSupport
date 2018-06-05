@@ -115,8 +115,8 @@ function getStorage() {
         let users = userList['lastUsers'];
         // Check if a list has been stored
         if (users === undefined) {
-            initializeStorage("lastUsers", 7);
-            console.log('Storage not yet initialised');
+            initializeStorage(7);
+            getStorage();
             return;
         } else {
             for (let u = 0; u < users.length; u++) {
@@ -137,12 +137,12 @@ function getStorage() {
 
 
 // Initializes storage,
-function initializeStorage(name, num) {
+function initializeStorage(num) {
     let storageList = [];
     for (let i = 0; i < num; i++) {
         storageList.push("");
     };
-    chrome.storage.local.set({name: storageList});
+    chrome.storage.local.set({"lastUsers": storageList});
 };
 
 
