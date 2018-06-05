@@ -24,15 +24,20 @@ function updatePopup(user, tab) {
     document.querySelector("#inactiveSubs").textContent = isItSingle(user.inactiveSubs, "inactive subscription", "");
 
     if (user.kindOfSub === "blendle") {
-        document.querySelector("#endOfSub").style.background = "lightgoldenrodyellow";
+        document.querySelector("#endOfSub").style.background = "coral";
+        document.querySelector("#endOfSub").style.color = "white";
     } else if (user.kindOfSub === "stripe") {
-        document.querySelector("#endOfSub").style.background = "lightcyan";
+        document.querySelector("#endOfSub").style.background = "deepskyblue";
+        document.querySelector("#endOfSub").style.color = "white";
     } else if (user.kindOfSub === "apple") {
-        document.querySelector("#endOfSub").style.background = "powderblue";
+        document.querySelector("#endOfSub").style.background = "dodgerblue";
+        document.querySelector("#endOfSub").style.color = "white";
     } else if (user.kindOfSub === "vodafone") {
-        document.querySelector("#endOfSub").style.background = "lightcoral";
+        document.querySelector("#endOfSub").style.background = "crimson";
+        document.querySelector("#endOfSub").style.color = "white";
     } else {
         document.querySelector("#endOfSub").style.background = "none";
+        document.querySelector("#endOfSub").style.color = "black";
     }
     checkIfZero();
 };
