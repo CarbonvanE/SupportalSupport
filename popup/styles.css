@@ -91,6 +91,15 @@ td, table{
     color: rgb(150,150,150);
 }
 
+.active {
+    display: flex;
+    justify-content: space-between;
+}
+
+#endOfSub {
+    border-radius: 3px;
+    padding: 0 3px;
+}
 
 
 /* Open supportal options */

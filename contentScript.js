@@ -12,6 +12,8 @@ var allInfo = {
     connectedToFB: "",
     emailSubs: "",
     activeSubs: "",
+    kindOfSub: "",
+    endOfSub: "",
     inactiveSubs: ""
 };
 
@@ -104,6 +106,10 @@ function analyseWebpage(allLines) {
             let splittedLine = allLines[l + 1].split(' ');
             allInfo.activeSubs = parseInt(splittedLine[0]);
             allInfo.inactiveSubs = parseInt(splittedLine[2]);
+        } else if (line.startsWith("Type\tStart")) {
+            let subInfo = allLines[l + 1].split(' ')[1];
+            allInfo.kindOfSub = subInfo.split('\t')[0];
+            allInfo.endOfSub = subInfo.split('\t')[1].replace(',', '')
         };
     };
 };

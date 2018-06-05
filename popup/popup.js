@@ -20,7 +20,20 @@ function updatePopup(user, tab) {
     document.querySelector("#transactions").textContent = isItSingle(user.transactions, "transaction", "");
     document.querySelector("#emailSubs").textContent = isItSingle(user.emailSubs, "email subscription", "");
     document.querySelector("#activeSubs").textContent = isItSingle(user.activeSubs, "active subscription", "");
+    document.querySelector("#endOfSub").textContent = user.endOfSub
     document.querySelector("#inactiveSubs").textContent = isItSingle(user.inactiveSubs, "inactive subscription", "");
+
+    if (user.kindOfSub === "blendle") {
+        document.querySelector("#endOfSub").style.background = "lightgoldenrodyellow";
+    } else if (user.kindOfSub === "stripe") {
+        document.querySelector("#endOfSub").style.background = "lightcyan";
+    } else if (user.kindOfSub === "apple") {
+        document.querySelector("#endOfSub").style.background = "powderblue";
+    } else if (user.kindOfSub === "vodafone") {
+        document.querySelector("#endOfSub").style.background = "lightcoral";
+    } else {
+        document.querySelector("#endOfSub").style.background = "none";
+    }
     checkIfZero();
 };
 
