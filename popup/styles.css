@@ -98,7 +98,8 @@ td, table{
 
 #endOfSub {
     border-radius: 3px;
-    padding: 0 3px;
+    padding: 0 5px;
+    font-weight: 600;
 }
 
 

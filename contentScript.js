@@ -107,9 +107,10 @@ function analyseWebpage(allLines) {
             allInfo.activeSubs = parseInt(splittedLine[0]);
             allInfo.inactiveSubs = parseInt(splittedLine[2]);
         } else if (line.startsWith("Type\tStart")) {
-            let subInfo = allLines[l + 1].split(' ')[1];
-            allInfo.kindOfSub = subInfo.split('\t')[0];
-            allInfo.endOfSub = subInfo.split('\t')[1].replace(',', '')
+            if (allLines[l + 1] !== "Email settings") {
+                allInfo.kindOfSub = allLines[l + 1].split(' ')[1].split('\t')[0];
+                allInfo.endOfSub = getDate(allLines[l + 1].split(' ')[2].split('\t')[1].replace(',', ''));
+            }
         };
     };
 };
@@ -157,6 +158,22 @@ function toStorage(users) {
     chrome.storage.local.set({"lastUsers": users});
 };
 
+
+function getDate(date) {
+    if (date.length != 10) {
+        return date;
+    } else {
+        let day = date.substring(0,2).replace("0", "");
+        let month = date.substring(3,5);
+        let year = date.substring(6,10);
+
+        if (Number(year) === (new Date()).getFullYear()) {
+            year = ""
+        }
+        allMonths = ["Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sep", "Oct", "Nov", "Dec"];
+        return day + " " + allMonths[Number(month) - 1] + " " + year;
+    }
+};
 
 // Finds the number of email subscriptions
 function getEmailSubs() {
