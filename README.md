@@ -5,6 +5,7 @@ Simple Chrome extension to simplify searching within the Supportal database.
 1. Download the repository
 2. Go to `chrome://extensions/`
 3. Click `load unpacked`
+4. Select the repository
 
 ## Use
 1. Select text and right click within Chrome
