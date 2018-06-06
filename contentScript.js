@@ -180,8 +180,10 @@ function getEmailSubs() {
     let allSubs = document.querySelectorAll(".change-opt-out");
     let numOfSubs = 0;
     for (let i = 0; i < allSubs.length; i++) {
-        if (allSubs[i].checked) {
-            numOfSubs++;
+        if (allSubs[i]["name"] !== "master_opt_out" && allSubs[i]["name"] !== "ad_retargeting_opt_out" && allSubs[i]["name"] !== "publisher_hashed_email_share_opt_out" && allSubs[i]["name"] !== "mixpanel_opt_out") {
+            if (allSubs[i].checked) {
+                numOfSubs++;
+            };
         };
     };
     // let doNotChange = ["master_opt_out",
