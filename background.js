@@ -26,7 +26,7 @@ function getSupportal(info, tab) {
             // Find the last open Supportal tab
             for (let i = 0; i < tabs.length; i++) {
                 if (tabs[i]["url"].startsWith("https://supportal2.blendle.io/")) {
-                    if (Date.now() - t['updateTime'] > 7000) {
+                    if (Date.now() - t['updateTime'] > 10000) {
                         chrome.tabs.update(tabs[i]["id"], {url: newURL});
                         chrome.storage.local.set({"updateTime": Date.now()});
                         return;
@@ -34,7 +34,7 @@ function getSupportal(info, tab) {
                 };
             };
             // If no Supportal tab is open, open a new tab
-            chrome.tabs.create({ url: newURL });
+            chrome.tabs.create({url: newURL, active: false});
             return;
         });
     });
