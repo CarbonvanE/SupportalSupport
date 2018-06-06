@@ -35,10 +35,17 @@
     "commands": {
         "_execute_browser_action": {
             "suggested_key": {
-                "default": "Ctrl+E",
-                "mac": "Command+E"
+                "default": "Ctrl+Z",
+                "mac": "MacCtrl+Z"
             },
             "description": "Open extension"
-        }
+        },
+        "goToNextPage": {
+            "suggested_key": {
+              "default": "Ctrl+X",
+              "mac": "MacCtrl+X"
+            },
+            "description": "Go to next Supportal or Zendesk tab"
+          }
     }
 }
