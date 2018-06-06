@@ -18,16 +18,25 @@ function getSupportal(info, tab) {
     // Find which Supportal tabs are already open
     chrome.tabs.query({}, function(tabs) {
         let tabID = -1;
-        // Find the last open Supportal tab
-        for (let i = 0; i < tabs.length; i++) {
-            if (tabs[i]["url"].startsWith("https://supportal2.blendle.io/")) {
-                chrome.tabs.update(tabs[i]["id"], {url: newURL});
+        chrome.storage.local.get(['updateTime'], function(t) {
+            if (t['updateTime'] === undefined) {
+                chrome.tabs.create({ url: newURL });
                 return;
+            }
+            // Find the last open Supportal tab
+            for (let i = 0; i < tabs.length; i++) {
+                if (tabs[i]["url"].startsWith("https://supportal2.blendle.io/")) {
+                    if (Date.now() - t['updateTime'] > 7000) {
+                        chrome.tabs.update(tabs[i]["id"], {url: newURL});
+                        chrome.storage.local.set({"updateTime": Date.now()});
+                        return;
+                    };
+                };
             };
-        };
-        // If no Supportal tab is open, open a new tab
-        chrome.tabs.create({ url: newURL });
-        return;
+            // If no Supportal tab is open, open a new tab
+            chrome.tabs.create({ url: newURL });
+            return;
+        });
     });
 };
 
