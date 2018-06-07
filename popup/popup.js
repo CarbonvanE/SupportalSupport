@@ -54,7 +54,11 @@ chrome.storage.local.get(['lastUsers'], function(userList) {
     // Create a list with all display names
     let displayNames = [];
     for (let u = 0; u < users.length; u++) {
-        displayNames.push(users[u]['userID']);
+        if (users[u]['userID'] !== undefined) {
+            displayNames.push(users[u]['userID']);
+        } else {
+            displayNames.push("")
+        }
     };
     updatePopup(users[0], 1);
     for (let i = 0; i < displayNames.length; i++) {
