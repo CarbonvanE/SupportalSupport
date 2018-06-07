@@ -12,9 +12,13 @@ function updatePopup(user, tab) {
     document.querySelector("#userSince").textContent = "User since " + user.signUpDate;
     if (!user.isConfirmed) {
         document.querySelector("#confirmed").textContent = "Is not yet confirmed";
+    } else {
+        document.querySelector("#confirmed").textContent = "";
     };
     if (user.connectedToFB) {
         document.querySelector("#connected").textContent = "Is connected to Facebook";
+    } else {
+        document.querySelector("#connected").textContent = "";
     };
     document.querySelector("#articlesRead").textContent = isItSingle(user.reads, "article", "read");
     document.querySelector("#transactions").textContent = isItSingle(user.transactions, "transaction", "");
