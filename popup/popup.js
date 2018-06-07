@@ -54,7 +54,7 @@ chrome.storage.local.get(['lastUsers'], function(userList) {
     };
     updatePopup(users[0], 1);
     for (let i = 0; i < displayNames.length; i++) {
-        document.querySelector(".tab" + (i + 1)).innerHTML = getIcon(users[i], "") + displayNames[i];
+        document.querySelector(".tab" + (i + 1)).innerHTML = `<i class="fas fa-${users[i]["icon"]}"></i>` + displayNames[i];
     };
     goToSupportal();
 });
@@ -111,28 +111,6 @@ function goToSamePage(e) {
 function goToNewPage(e) {
     let newURL = "https://supportal2.blendle.io/user/" + uID;
     chrome.tabs.create({ url: newURL });
-};
-
-
-// Get the appropriate icon for each user
-function getIcon(user, size) {
-    if (user.reads > 500) {
-        return `<i class="fas fa-user-astronaut ${size}"></i>`;
-    } else if (user.reads < 5) {
-        return `<i class="fas fa-child ${size}"></i>`;
-    } else if (user.activeSubs > 0 && user.inactiveSubs > 0) {
-        return `<i class="fas fa-user-shield ${size}"></i>`;
-    } else if (user.activeSubs === 0 && user.inactiveSubs > 1) {
-        return `<i class="fas fa-user-times ${size}"></i>`;
-    } else if (user.activeSubs === 0 && user.inactiveSubs === 1) {
-        return `<i class="fas fa-user-minus ${size}"></i>`;
-    } else if (user.activeSubs > 0 && user.inactiveSubs === 0) {
-        return `<i class="fas fa-user-clock ${size}"></i>`;
-    } else if (user.transactions > 0) {
-        return `<i class="fas fa-user-plus ${size}"></i>`;
-    } else {
-        return `<i class="far fa-question-circle ${size}"></i>`;
-    };
 };
 
 

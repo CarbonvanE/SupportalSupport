@@ -14,7 +14,8 @@ var allInfo = {
     activeSubs: "",
     kindOfSub: "",
     endOfSub: "",
-    inactiveSubs: ""
+    inactiveSubs: "",
+    icon: ""
 };
 
 
@@ -23,7 +24,10 @@ let allLines = getWebpage();
 if (allInfo["userID"] !== false) {
     analyseWebpage(allLines);
     getStorage();
-    chrome.runtime.sendMessage({"gotContent": true});
+    setIcon();
+    chrome.runtime.sendMessage({"gotContent": true, "info": allInfo});
+} else {
+    chrome.runtime.sendMessage({"gotContent": false, "icon": "exclamation"});
 };
 
 
@@ -204,3 +208,24 @@ function getEmailSubs() {
     // }
     return(numOfSubs);
 };
+
+
+function setIcon() {
+    if (allInfo.reads > 500) {
+        allInfo["icon"] = "user-astronaut";
+    } else if (allInfo.reads < 5) {
+        allInfo["icon"] = "child";
+    } else if (allInfo.activeSubs > 0 && allInfo.inactiveSubs > 0) {
+        allInfo["icon"] = "user-shield";
+    } else if (allInfo.activeSubs === 0 && allInfo.inactiveSubs > 1) {
+        allInfo["icon"] = "user-times";
+    } else if (allInfo.activeSubs === 0 && allInfo.inactiveSubs === 1) {
+        allInfo["icon"] = "user-minus";
+    } else if (allInfo.activeSubs > 0 && allInfo.inactiveSubs === 0) {
+        allInfo["icon"] = "user-clock";
+    } else if (allInfo.transactions > 0) {
+        allInfo["icon"] = "user-plus";
+    } else {
+        allInfo["icon"] = "question-circle";
+    };
+}

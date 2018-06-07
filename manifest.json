@@ -17,6 +17,7 @@
         "contextMenus",
         "tabs",
         "storage",
+        "notifications",
         "https://supportal2.blendle.io/*"
     ],
     "content_scripts": [ {

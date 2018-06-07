@@ -44,23 +44,27 @@ function getSupportal(info, tab) {
 // Flicker the icon for a few seconds
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request["gotContent"] === true) {
-            let n = 0;
-            let m = 0;
-            const flicker = setInterval(function() {
-                n++;
-                chrome.browserAction.setIcon({path: `icons/gif/icon_128_${n}.png`});
-                if (n === 11) {
-                    m++;
-                    n = 0;
-                };
-            }, 50);
-            setTimeout(function() {
-                clearInterval(flicker);
-                chrome.browserAction.setIcon({path: "icons/grey/icon_16.png"});
-                // chrome.browserAction.setBadgeText({text: "abc"});
-            }, 2500);
-        };
+        // Check whether notification permissions have already been granted
+        if (Notification.permission === "granted" && "Notification" in window) {
+            if (request["gotContent"] === true) {
+                chrome.notifications.create("pageHasBeenLoaded", {
+                    type: "basic",
+                    iconUrl: chrome.extension.getURL(`icons/users/${request["info"]["icon"]}.png`),
+                    title: request["info"]["email"],
+                    message: ""
+                });
+            } else {
+                chrome.notifications.create("pageHasBeenLoaded", {
+                    type: "basic",
+                    iconUrl: chrome.extension.getURL(`icons/users/${request["icon"]}.png`),
+                    title: "Could not find the user!",
+                    message: "",
+                });
+            }
+        }
+        setTimeout(function() {
+            chrome.notifications.clear("pageHasBeenLoaded");
+        }, 3000)
     }
 );
 
