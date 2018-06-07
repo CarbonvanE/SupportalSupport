@@ -2,10 +2,11 @@
 Simple Chrome extension to simplify searching within the Supportal database.
 
 ## Installation (temporary)
-1. Download the repository
+1. Download SupportalSupport.crx
 2. Go to `chrome://extensions/`
-3. Click `load unpacked`
-4. Select the folder that just downloaded
+3. Drop SupportalSupport.crx on the Chrome webpage
+4. The extension is installed!
+
 
 ## Use
 1. Select text and right click within Chrome
