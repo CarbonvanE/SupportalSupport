@@ -112,8 +112,13 @@ function analyseWebpage(allLines) {
             allInfo.inactiveSubs = parseInt(splittedLine[2]);
         } else if (line.startsWith("Type\tStart")) {
             if (allLines[l + 1] !== "Email settings") {
-                allInfo.kindOfSub = allLines[l + 1].split(' ')[1].split('\t')[0];
-                allInfo.endOfSub = getDate(allLines[l + 1].split(' ')[2].split('\t')[1].replace(',', ''));
+                let subList = allLines[l + 1].split(/\t| |, /);
+                allInfo.kindOfSub = subList[1]
+                if (subList[2] === "Trial") {
+                    allInfo.endOfSub = getDate(subList[5]);
+                } else {
+                    allInfo.endOfSub = getDate(subList[4]);
+                }
             }
         };
     };
