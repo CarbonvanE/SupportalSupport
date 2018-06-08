@@ -15,6 +15,7 @@ var allInfo = {
     kindOfSub: "",
     endOfSub: "",
     inactiveSubs: "",
+    trial: false,
     icon: ""
 };
 
@@ -115,6 +116,7 @@ function analyseWebpage(allLines) {
                 let subList = allLines[l + 1].split(/\t| |, /);
                 allInfo.kindOfSub = subList[1]
                 if (subList[2] === "Trial") {
+                    allInfo.trial = true;
                     allInfo.endOfSub = getDate(subList[5]);
                 } else {
                     allInfo.endOfSub = getDate(subList[4]);
