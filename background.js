@@ -20,6 +20,7 @@ function getSupportal(info, tab) {
         let tabID = -1;
         chrome.storage.local.get(['updateTime'], function(t) {
             if (t['updateTime'] === undefined) {
+                chrome.storage.local.set({"updateTime": Date.now()});
                 chrome.tabs.create({ url: newURL });
                 return;
             }
