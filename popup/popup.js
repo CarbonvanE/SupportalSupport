@@ -27,20 +27,29 @@ function updatePopup(user, tab) {
     document.querySelector("#endOfSub").textContent = user.endOfSub
     document.querySelector("#inactiveSubs").textContent = isItSingle(user.inactiveSubs, "inactive subscription", "");
 
+    let backColor;
+    let fontColor;
     if (user.kindOfSub === "blendle") {
-        document.querySelector("#endOfSub").style.background = "rgb(255, 98, 85)";
-        document.querySelector("#endOfSub").style.color = "white";
+        backColor = "rgb(255, 98, 85)";
+        fontColor = "white";
     } else if (user.kindOfSub === "stripe") {
-        document.querySelector("#endOfSub").style.background = "deepskyblue";
-        document.querySelector("#endOfSub").style.color = "white";
+        backColor = "deepskyblue";
+        fontColor = "white";
     } else if (user.kindOfSub === "apple") {
-        document.querySelector("#endOfSub").style.background = "dodgerblue";
-        document.querySelector("#endOfSub").style.color = "white";
+        backColor = "dodgerblue";
+        fontColor = "white";
     } else if (user.kindOfSub === "vodafone") {
-        document.querySelector("#endOfSub").style.background = "crimson";
-        document.querySelector("#endOfSub").style.color = "white";
+        backColor = "crimson";
+        fontColor = "white";
     } else {
-        document.querySelector("#endOfSub").style.background = "none";
+        backColor = "none";
+        fontColor = "black";
+    }
+    if (user.trial === false) {
+        document.querySelector("#endOfSub").style.background = backColor;
+        document.querySelector("#endOfSub").style.color = fontColor;
+    } else {
+        document.querySelector("#endOfSub").style.border = "1px solid " + backColor;
         document.querySelector("#endOfSub").style.color = "black";
     }
     checkIfZero();
