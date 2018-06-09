@@ -29,7 +29,7 @@ if (allInfo["isUser"] === true) {
     setIcon();
     chrome.runtime.sendMessage({"gotContent": true, "info": allInfo});
 } else {
-    chrome.runtime.sendMessage({"gotContent": allInfo["isUser"]);
+    chrome.runtime.sendMessage({"gotContent": allInfo["isUser"]});
 }
 
 
@@ -225,14 +225,16 @@ function setIcon() {
         allInfo["icon"] = "user-astronaut";
     } else if (allInfo.reads < 5) {
         allInfo["icon"] = "child";
+    } else if (allInfo.isConfirmed === false) {
+        allInfo["icon"] = "user-slash";
+    } else if (allInfo.trial === true) {
+        allInfo["icon"] = "user-graduate";
     } else if (allInfo.activeSubs > 0 && allInfo.inactiveSubs > 0) {
         allInfo["icon"] = "user-shield";
     } else if (allInfo.activeSubs === 0 && allInfo.inactiveSubs > 1) {
         allInfo["icon"] = "user-times";
     } else if (allInfo.activeSubs === 0 && allInfo.inactiveSubs === 1) {
         allInfo["icon"] = "user-minus";
-    } else if (allInfo.activeSubs > 0 && allInfo.inactiveSubs === 0) {
-        allInfo["icon"] = "user-clock";
     } else if (allInfo.transactions > 0) {
         allInfo["icon"] = "user-plus";
     } else {
