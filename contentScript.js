@@ -1,4 +1,5 @@
 var allInfo = {
+    isUser: "",
     userID: "",
     uuid: "",
     name: "",
@@ -22,14 +23,15 @@ var allInfo = {
 
 // Begin of program
 let allLines = getWebpage();
-if (allInfo["userID"] !== false) {
+if (allInfo["isUser"] === true) {
     analyseWebpage(allLines);
     getStorage();
     setIcon();
     chrome.runtime.sendMessage({"gotContent": true, "info": allInfo});
 } else {
-    chrome.runtime.sendMessage({"gotContent": false, "icon": "exclamation"});
-};
+    chrome.runtime.sendMessage({"gotContent": allInfo["isUser"]);
+}
+
 
 
 // Get text of webpage and check if its a user pages
@@ -37,12 +39,13 @@ function getWebpage() {
     let results = document.body.innerText;
     let allLines = results.split('\n');
     if (allLines[2] === "Results") {
-        allInfo.userID = false;
+        allInfo.isUser = allLines.slice(3);
         return;
     } else if (allLines[allLines.length - 1] === "Create user") {
-        allInfo.userID = false;
+        allInfo.isUser = false;
         return;
     } else {
+        allInfo.isUser = true;
         return(allLines);
     };
 };

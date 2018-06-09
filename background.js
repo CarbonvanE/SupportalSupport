@@ -46,26 +46,31 @@ function getSupportal(info, tab) {
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         // Check whether notification permissions have already been granted
-        if (Notification.permission === "granted" && "Notification" in window) {
-            if (request["gotContent"] === true) {
+        if (request["gotContent"] === true) {
+            if (Notification.permission === "granted" && "Notification" in window) {
                 chrome.notifications.create("pageHasBeenLoaded", {
                     type: "basic",
                     iconUrl: chrome.extension.getURL(`icons/users/${request["info"]["icon"]}.png`),
                     title: request["info"]["email"],
                     message: ""
                 });
-            } else {
-                chrome.notifications.create("pageHasBeenLoaded", {
-                    type: "basic",
-                    iconUrl: chrome.extension.getURL(`icons/users/${request["icon"]}.png`),
-                    title: "Could not find the user!",
-                    message: "",
-                });
+                setTimeout(function() {
+                    chrome.notifications.clear("pageHasBeenLoaded");
+                }, 3000)
             }
+        } else if (request["gotContent"] === false){
+            window.alert("Could not find the user!")
+        } else {
+            let usersFound = request["gotContent"]
+            let message = "There were " + usersFound.length + " users found\n\n"
+            for (let i = 0; (i < usersFound.length && i < 20); i++) {
+                message += usersFound[i].split(" ")[0] + "\n"
+            }
+            if (usersFound.length >= 20) {
+                message += "..."
+            }
+            window.alert(message);
         }
-        setTimeout(function() {
-            chrome.notifications.clear("pageHasBeenLoaded");
-        }, 3000)
     }
 );
 
