@@ -33,13 +33,13 @@ function updatePopup(user, tab) {
         backColor = "rgb(255, 98, 85)";
         fontColor = "white";
     } else if (user.kindOfSub === "stripe") {
-        backColor = "deepskyblue";
+        backColor = "mediumslateblue";
         fontColor = "white";
     } else if (user.kindOfSub === "apple") {
         backColor = "dodgerblue";
         fontColor = "white";
     } else if (user.kindOfSub === "vodafone") {
-        backColor = "crimson";
+        backColor = "brown";
         fontColor = "white";
     } else {
         backColor = "none";
