@@ -31,15 +31,15 @@ function getSupportal(info, tab) {
                         chrome.tabs.update(tabs[i]["id"], {url: newURL});
                         chrome.storage.local.set({"updateTime": Date.now()});
                         return;
-                    };
-                };
-            };
+                    }
+                }
+            }
             // If no Supportal tab is open, open a new tab
             chrome.tabs.create({url: newURL, active: false});
             return;
         });
     });
-};
+}
 
 
 // Flicker the icon for a few seconds
@@ -56,23 +56,23 @@ chrome.runtime.onMessage.addListener(
                 });
                 setTimeout(function() {
                     chrome.notifications.clear("pageHasBeenLoaded");
-                }, 3000)
+                }, 3000);
             }
         } else if (request["gotContent"] === false){
-            window.alert("Could not find the user!")
+            window.alert("Could not find the user!");
         } else {
-            let usersFound = request["gotContent"]
-            let message = "There were " + usersFound.length + " users found\n\n"
+            let usersFound = request["gotContent"];
+            let message = "There were " + usersFound.length + " users found\n\n";
             for (let i = 0; (i < usersFound.length && i < 20); i++) {
-                message += usersFound[i].split(" ")[0] + "\n"
+                message += usersFound[i].split(" ")[0] + "\n";
             }
             if (usersFound.length >= 20) {
-                message += "..."
+                message += "...";
             }
             window.alert(message);
         }
     }
-);
+)
 
 
 // Open the next Supportal or Zendesk tab
@@ -80,19 +80,19 @@ chrome.commands.onCommand.addListener(function(command) {
     if (command == "goToNextPage") {
         chrome.tabs.query({}, function(tabs) {
             let tabIndex = -1;
-            let allTabs = []
+            let allTabs = [];
             // Find the last open Supportal tab
             for (let i = 0; i < tabs.length; i++) {
                 if (tabs[i]["active"] === true) {
                     tabIndex = tabs[i]["index"];
                     break;
                 }
-            };
+            }
             for (let j = tabIndex + 1; j < tabs.length; j++) {
-                allTabs.push(tabs[j])
+                allTabs.push(tabs[j]);
             }
             for (let k = 0; k < tabIndex; k++) {
-                allTabs.push(tabs[k])
+                allTabs.push(tabs[k]);
             }
             for (let k = 0; k < allTabs.length; k++) {
                 if (allTabs[k]["url"].startsWith("https://supportal2.blendle.io/") || allTabs[k]["url"].startsWith("https://blendle.zendesk.com/") || allTabs[k]["url"].startsWith("https://supportal.blendle.io/")) {
@@ -101,7 +101,7 @@ chrome.commands.onCommand.addListener(function(command) {
                 };
             }
         });
-    };
+    }
 });
 
 
@@ -114,4 +114,4 @@ function copyToClipboard(text){
     dummy.select();
     document.execCommand("copy");
     document.body.removeChild(dummy);
-};
+}

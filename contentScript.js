@@ -47,8 +47,8 @@ function getWebpage() {
     } else {
         allInfo.isUser = true;
         return(allLines);
-    };
-};
+    }
+}
 
 
 // Analyse the webpage
@@ -88,7 +88,7 @@ function analyseWebpage(allLines) {
                 allInfo.name = newName;
             } else {
                 allInfo.name = "N.A.";
-            };
+            }
         } else if (line.startsWith("Email") && allInfo.email === "") {
             let emailAndBool = line.split('\t')[1];
             allInfo.email = emailAndBool.split(' ')[0];
@@ -103,7 +103,7 @@ function analyseWebpage(allLines) {
                 allInfo.connectedToFB = true;
             } else {
                 allInfo.connectedToFB = false;
-            };
+            }
         } else if (line.startsWith("Reads") && allInfo.reads === "") {
             allInfo.reads = line.split('\t')[1];
         } else if (line.startsWith("signup-gift") || line.startsWith("gift")) {
@@ -117,7 +117,7 @@ function analyseWebpage(allLines) {
         } else if (line.startsWith("Type\tStart")) {
             if (allLines[l + 1] !== "Email settings") {
                 let subList = allLines[l + 1].split(/\t| |, /);
-                allInfo.kindOfSub = subList[1]
+                allInfo.kindOfSub = subList[1];
                 if (subList[2] === "Trial") {
                     allInfo.trial = true;
                     allInfo.endOfSub = getDate(subList[5]);
@@ -125,9 +125,9 @@ function analyseWebpage(allLines) {
                     allInfo.endOfSub = getDate(subList[4]);
                 }
             }
-        };
-    };
-};
+        }
+    }
+}
 
 
 // Get the current storage and add the new user info
@@ -147,14 +147,14 @@ function getStorage() {
                     users.unshift(allInfo);
                     toStorage(users);
                     return;
-                };
-            };
+                }
+            }
             users.pop();
             users.unshift(allInfo);
             toStorage(users);
-        };
-    });
-};
+        }
+    })
+}
 
 
 // Initializes storage,
@@ -162,15 +162,15 @@ function initializeStorage(num) {
     let storageList = [];
     for (let i = 0; i < num; i++) {
         storageList.push("");
-    };
+    }
     chrome.storage.local.set({"lastUsers": storageList});
-};
+}
 
 
 // Stores list in storage
 function toStorage(users) {
     chrome.storage.local.set({"lastUsers": users});
-};
+}
 
 
 function getDate(date) {
@@ -189,7 +189,7 @@ function getDate(date) {
         allMonths = ["Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sep", "Oct", "Nov", "Dec"];
         return day + " " + allMonths[Number(month) - 1] + " " + year;
     }
-};
+}
 
 // Finds the number of email subscriptions
 function getEmailSubs() {
@@ -199,9 +199,9 @@ function getEmailSubs() {
         if (allSubs[i]["name"] !== "master_opt_out" && allSubs[i]["name"] !== "ad_retargeting_opt_out" && allSubs[i]["name"] !== "publisher_hashed_email_share_opt_out" && allSubs[i]["name"] !== "mixpanel_opt_out") {
             if (allSubs[i].checked) {
                 numOfSubs++;
-            };
-        };
-    };
+            }
+        }
+    }
     // let doNotChange = ["master_opt_out",
     //                     "ad_retargeting_opt_out",
     //                     "publisher_hashed_email_share_opt_out",
@@ -219,7 +219,7 @@ function getEmailSubs() {
     //     }
     // }
     return(numOfSubs);
-};
+}
 
 
 function setIcon() {
@@ -241,5 +241,5 @@ function setIcon() {
         allInfo["icon"] = "user-plus";
     } else {
         allInfo["icon"] = "question-circle";
-    };
+    }
 }
