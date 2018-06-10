@@ -182,7 +182,9 @@ function getDate(date) {
         let year = date.substring(6,10);
 
         if (Number(year) === (new Date()).getFullYear()) {
-            year = ""
+            year = "";
+        } else {
+            year = "'" + year.substring(2,4);
         }
         allMonths = ["Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sep", "Oct", "Nov", "Dec"];
         return day + " " + allMonths[Number(month) - 1] + " " + year;
