@@ -143,20 +143,26 @@ function goToNewPage(e) {
 function unsubAll(userID) {
     let elem = document.querySelector("#unsubAll");
     chrome.tabs.query({}, function(tabs) {
+        let isItTheSamePage = false;
         for (let i = 0; i < tabs.length; i++) {
             let supportalTab = tabs[i];
-            let userURL = "https://supportal2.blendle.io/user/" + userID + "#"
-            if (supportalTab["url"] === userURL) {
+            let userURL1 = "https://supportal2.blendle.io/user/" + userID + "#"
+            let userURL2 = "https://supportal2.blendle.io/user/" + userID
+            if (supportalTab["url"] === userURL1 || supportalTab["url"] === userURL2) {
+                isItTheSamePage = true;
                 elem.addEventListener('click', function() {
                     chrome.tabs.sendMessage(
                         supportalTab["id"],
-                        {unsubAll: userURL},
+                        {unsubAll: userURL1},
                         function() {
                             window.location.reload();
                         }
                     );
                 });
             }
+        }
+        if (isItTheSamePage === false) {
+            document.querySelector("#unsubAll").style.display = "none";
         }
     })
 }

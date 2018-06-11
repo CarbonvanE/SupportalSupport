@@ -178,7 +178,7 @@ function toStorage(users) {
 function unsubAll() {
     chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
         let currentPage = location.href
-        if (currentPage === request.unsubAll) {
+        if (currentPage === request.unsubAll || currentPage === request.unsubAll.substring(0, request.unsubAll.length - 1)) {
             let allSubs = document.querySelectorAll(".change-opt-out");
             for (let s = 0; s < allSubs.length; s++) {
                 if (allSubs[s]["name"] === "master_opt_out") {
