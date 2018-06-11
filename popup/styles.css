@@ -92,16 +92,33 @@ td, table{
     color: rgb(150,150,150);
 }
 
+
+.email,
 .active {
     display: flex;
     justify-content: space-between;
 }
 
+#unsubAll,
 #endOfSub {
     border-radius: 3px;
     padding: 0 5px;
     font-weight: 600;
     text-align: center;
+}
+
+#unsubAll {
+    font-weight: 400;
+    border: solid 1px lightgrey;
+    color: rgb(150,150,150);
+    display: none;
+}
+
+#unsubAll:hover {
+    cursor: pointer;
+    background-color: grey;
+    border: solid 1px grey;
+    color: whitesmoke;
 }
 
 

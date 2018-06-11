@@ -5,11 +5,18 @@ function updatePopup(user, tab) {
         document.querySelector(".tab" + i).classList.remove("tabSelected");
     }
     document.querySelector(".tab" + tab).classList.add("tabSelected");
+    document.querySelector("#unsubAll").style.display = "block";
 
     // Change user info that's being displayed
     document.querySelector("#name").textContent = user.name;
     document.querySelector("#saldo").textContent = user.saldo;
     document.querySelector("#userSince").textContent = "User since " + user.signUpDate;
+    document.querySelector("#articlesRead").textContent = isItSingle(user.reads, "article", "read");
+    document.querySelector("#transactions").textContent = isItSingle(user.transactions, "transaction", "");
+    document.querySelector("#emailSubs").textContent = isItSingle(user.emailSubs, "email subscription", "");
+    document.querySelector("#activeSubs").textContent = isItSingle(user.activeSubs, "active subscription", "");
+    document.querySelector("#endOfSub").textContent = user.endOfSub;
+    document.querySelector("#inactiveSubs").textContent = isItSingle(user.inactiveSubs, "inactive subscription", "");
     if (!user.isConfirmed) {
         document.querySelector("#confirmed").textContent = "Is not yet confirmed";
     } else {
@@ -20,12 +27,11 @@ function updatePopup(user, tab) {
     } else {
         document.querySelector("#connected").textContent = "";
     }
-    document.querySelector("#articlesRead").textContent = isItSingle(user.reads, "article", "read");
-    document.querySelector("#transactions").textContent = isItSingle(user.transactions, "transaction", "");
-    document.querySelector("#emailSubs").textContent = isItSingle(user.emailSubs, "email subscription", "");
-    document.querySelector("#activeSubs").textContent = isItSingle(user.activeSubs, "active subscription", "");
-    document.querySelector("#endOfSub").textContent = user.endOfSub;
-    document.querySelector("#inactiveSubs").textContent = isItSingle(user.inactiveSubs, "inactive subscription", "");
+    if (user.emailSubs === 0) {
+        document.querySelector("#unsubAll").textContent = "Resub all";
+    } else {
+        document.querySelector("#unsubAll").textContent = "Unsub";
+    }
 
     let backColor;
     let fontColor;
@@ -55,6 +61,7 @@ function updatePopup(user, tab) {
         document.querySelector("#endOfSub").style.color = "black";
     }
     checkIfZero();
+    unsubAll(user.userID)
 }
 
 
@@ -123,6 +130,29 @@ function goToSamePage(e) {
             }
         }
     });
+}
+
+
+//
+function unsubAll(userID) {
+    let elem = document.querySelector("#unsubAll");
+    chrome.tabs.query({}, function(tabs) {
+        for (let i = 0; i < tabs.length; i++) {
+            let supportalTab = tabs[i];
+            let userURL = "https://supportal2.blendle.io/user/" + userID + "#"
+            if (supportalTab["url"] === userURL) {
+                elem.addEventListener('click', function() {
+                    chrome.tabs.sendMessage(
+                        supportalTab["id"],
+                        {unsubAll: userURL},
+                        function() {
+                            window.location.reload();
+                        }
+                    );
+                });
+            }
+        }
+    })
 }
 
 

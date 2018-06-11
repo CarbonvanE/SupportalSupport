@@ -27,6 +27,7 @@ if (allInfo["isUser"] === true) {
     analyseWebpage(allLines);
     getStorage();
     setIcon();
+    unsubAll();
     chrome.runtime.sendMessage({"gotContent": true, "info": allInfo});
 } else {
     chrome.runtime.sendMessage({"gotContent": allInfo["isUser"]});
@@ -173,6 +174,41 @@ function toStorage(users) {
 }
 
 
+// Unsubscribe from all emails
+function unsubAll() {
+    chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+        let currentPage = location.href
+        if (currentPage === request.unsubAll) {
+            let allSubs = document.querySelectorAll(".change-opt-out");
+            for (let s = 0; s < allSubs.length; s++) {
+                if (allSubs[s]["name"] === "master_opt_out") {
+                    allSubs[s].click();
+                    window.location.reload();
+                    window.onload = function() {sendResponse()}
+                    return true;
+                }
+            }
+        }
+    })
+}
+
+
+// Find the number of email subscriptions
+function getEmailSubs() {
+    let allSubs = document.querySelectorAll(".change-opt-out");
+    let numOfSubs = 0;
+    for (let i = 0; i < allSubs.length; i++) {
+        if (allSubs[i]["name"] !== "master_opt_out" && allSubs[i]["name"] !== "ad_retargeting_opt_out" && allSubs[i]["name"] !== "publisher_hashed_email_share_opt_out" && allSubs[i]["name"] !== "mixpanel_opt_out") {
+            if (allSubs[i].checked) {
+                numOfSubs++;
+            }
+        }
+    }
+    return(numOfSubs);
+}
+
+
+// Return the date in a simplified and more beautiful way
 function getDate(date) {
     if (date.length != 10) {
         return date;
@@ -189,36 +225,6 @@ function getDate(date) {
         allMonths = ["Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sep", "Oct", "Nov", "Dec"];
         return day + " " + allMonths[Number(month) - 1] + " " + year;
     }
-}
-
-// Finds the number of email subscriptions
-function getEmailSubs() {
-    let allSubs = document.querySelectorAll(".change-opt-out");
-    let numOfSubs = 0;
-    for (let i = 0; i < allSubs.length; i++) {
-        if (allSubs[i]["name"] !== "master_opt_out" && allSubs[i]["name"] !== "ad_retargeting_opt_out" && allSubs[i]["name"] !== "publisher_hashed_email_share_opt_out" && allSubs[i]["name"] !== "mixpanel_opt_out") {
-            if (allSubs[i].checked) {
-                numOfSubs++;
-            }
-        }
-    }
-    // let doNotChange = ["master_opt_out",
-    //                     "ad_retargeting_opt_out",
-    //                     "publisher_hashed_email_share_opt_out",
-    //                     "mixpanel_opt_out"];
-    // for (let i = 0; i < allSubs.length; i++) {
-    //     console.log(allSubs[i]["name"])
-    //     let inDoNotChange = false;
-    //     for (let j = 0; j < doNotChange.length; j++) {
-    //         if (allSubs[i]["name"] === doNotChange[j]) {
-    //             inDoNotChange = true;
-    //         }
-    //     }
-    //     if (inDoNotChange === false) {
-    //         allSubs[i]["checked"] = false;
-    //     }
-    // }
-    return(numOfSubs);
 }
 
 
