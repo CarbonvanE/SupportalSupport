@@ -62,6 +62,7 @@ function updatePopup(user, tab) {
     }
     checkIfZero();
     unsubAll(user.userID)
+    goToSupportal(user.userID);
 }
 
 
@@ -82,7 +83,6 @@ chrome.storage.local.get(['lastUsers'], function(userList) {
     for (let i = 0; i < displayNames.length; i++) {
         document.querySelector(".tab" + (i + 1)).innerHTML = `<i class="fas fa-${users[i]["icon"]}"></i>` + displayNames[i];
     }
-    goToSupportal();
 });
 
 
@@ -96,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
             for (let u = 0; u < users.length; u++) {
                 if (users[u]["userID"] === e.target.textContent) {
                     updatePopup(users[u], u + 1);
-                    goToSupportal();
                 }
             }
         });
@@ -105,9 +104,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // Get the user ID and open the user in Supportal
-let uID = "";
-function goToSupportal() {
-    uID = document.querySelector(".tabSelected").innerHTML.split("</i>")[1];
+let uID;
+function goToSupportal(userID) {
+    uID = userID;
     let elemSame = document.querySelector(".sameTab");
     let elemNew = document.querySelector(".newTab");
     elemSame.addEventListener('click', goToSamePage, true);
@@ -133,6 +132,13 @@ function goToSamePage(e) {
 }
 
 
+// open the Supportal info in a new tab
+function goToNewPage(e) {
+    let newURL = "https://supportal2.blendle.io/user/" + uID;
+    chrome.tabs.create({ url: newURL });
+}
+
+
 //
 function unsubAll(userID) {
     let elem = document.querySelector("#unsubAll");
@@ -153,13 +159,6 @@ function unsubAll(userID) {
             }
         }
     })
-}
-
-
-// open the Supportal info in a new tab
-function goToNewPage(e) {
-    let newURL = "https://supportal2.blendle.io/user/" + uID;
-    chrome.tabs.create({ url: newURL });
 }
 
 
