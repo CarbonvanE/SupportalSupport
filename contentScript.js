@@ -39,7 +39,9 @@ if (allInfo["isUser"] === true) {
 function getWebpage() {
     let results = document.body.innerText;
     let allLines = results.split('\n');
-    if (allLines[2] === "Results") {
+    if (allLines[3].startsWith("Could not find a user")) {
+        allInfo.isUser = false;
+    } else if (allLines[2] === "Results") {
         allInfo.isUser = allLines.slice(3);
         return;
     } else if (allLines[allLines.length - 1] === "Create user") {
