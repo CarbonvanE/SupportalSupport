@@ -184,8 +184,7 @@ function unsubAll() {
                 if (allSubs[s]["name"] === "master_opt_out") {
                     allSubs[s].click();
                     window.location.reload();
-                    window.onload = function() {sendResponse()}
-                    return true;
+                    return;
                 }
             }
         }

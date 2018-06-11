@@ -139,9 +139,10 @@ function goToNewPage(e) {
 }
 
 
-//
+// Unsubscribe from all newsletters
 function unsubAll(userID) {
     let elem = document.querySelector("#unsubAll");
+    let isClicked = false;
     chrome.tabs.query({}, function(tabs) {
         let isItTheSamePage = false;
         for (let i = 0; i < tabs.length; i++) {
@@ -151,13 +152,11 @@ function unsubAll(userID) {
             if (supportalTab["url"] === userURL1 || supportalTab["url"] === userURL2) {
                 isItTheSamePage = true;
                 elem.addEventListener('click', function() {
-                    chrome.tabs.sendMessage(
-                        supportalTab["id"],
-                        {unsubAll: userURL1},
-                        function() {
-                            window.location.reload();
-                        }
-                    );
+                    if (isClicked === false) {
+                        chrome.tabs.sendMessage(supportalTab["id"], {unsubAll: userURL1});
+                        document.querySelector("#unsubAll").innerText = "loading...";
+                        isClicked = true;
+                    }
                 });
             }
         }
