@@ -214,7 +214,10 @@ function getDate(date) {
     if (date.length != 10) {
         return date;
     } else {
-        let day = date.substring(0,2).replace("0", "");
+        let day = date.substring(0,2);
+        if (day[0] === "0") {
+            day = day[1];
+        };
         let month = date.substring(3,5);
         let year = date.substring(6,10);
 
