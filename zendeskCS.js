@@ -10,13 +10,10 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
 
 window.onload = function () {
-    let textBox;
-    let isPublic;
-    let box;
     setInterval(function() {
-        textBox = document.querySelector('.fr-focus');
-        isPublic = textBox.classList.contains('is-public');
-        box = textBox.querySelector('.zendesk-editor--rich-text-comment');
+        let textBox = document.querySelector('.fr-focus');
+        let isPublic = textBox.classList.contains('is-public');
+        let box = textBox.querySelector('.zendesk-editor--rich-text-comment');
         if (isPublic === false) {
             box.style.backgroundColor = "rgb(25, 25, 25)";
             box.style.color = "white";
