@@ -25,11 +25,6 @@
             "matches": ["https://supportal2.blendle.io/*"],
             "run_at": "document_end",
             "js": ["supportalCS.js"]
-        },
-        {
-            "matches": ["https://blendle.zendesk.com/agent/tickets/*"],
-            "run_at": "document_end",
-            "js": ["zendeskCS.js"]
         }
     ],
     "icons": {
@@ -54,13 +49,6 @@
               "mac": "MacCtrl+X"
             },
             "description": "Go to next Supportal or Zendesk tab"
-        },
-        "checkIfComment": {
-            "suggested_key": {
-              "default": "Ctrl+S",
-              "mac": "MacCtrl+S"
-            },
-            "description": "Solve ticket and check if the Zendesk reply is a comment"
-          }
+        }
     }
 }
