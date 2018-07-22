@@ -17,49 +17,24 @@ function updatePopup(user, tab) {
     $("#activeSubs").html(isItSingle(user.activeSubs, "active subscription", ""));
     $("#endOfSub").html(user.endOfSub);
     $("#inactiveSubs").html(isItSingle(user.inactiveSubs, "inactive subscription", ""));
-    if (!user.isConfirmed) {
-        $("#confirmed").html("Is not yet confirmed");
-    } else {
-        $("#confirmed").html("");
-    }
-    if (user.connectedToFB) {
-        $("#connected").html("Is connected to Facebook");
-    } else {
-        $("#connected").html("");
-    }
+    !user.isConfirmed ? $("#confirmed").html("Is not yet confirmed") : $("#confirmed").html("");
+    user.connectedToFB ? $("#connected").html("Is connected to Facebook") : $("#connected").html("");
     if (user.emailSubs === 0) {
         $("#unsubAll").html("Resub all");
     } else {
         $("#unsubAll").html("Unsub");
     }
 
-    let backColor;
-    let fontColor;
-    if (user.kindOfSub === "blendle") {
-        backColor = "rgb(70,70,70)";
-        fontColor = "white";
-    } else if (user.kindOfSub === "stripe") {
-        backColor = "mediumslateblue";
-        fontColor = "white";
-    } else if (user.kindOfSub === "apple") {
-        backColor = "dodgerblue";
-        fontColor = "white";
-    } else if (user.kindOfSub === "vodafone") {
-        backColor = "brown";
-        fontColor = "white";
+    // Change the appearance of the "end of subscription" button
+    let endOfSub = $("#endOfSub");
+    endOfSub.removeClass();
+    if (["blendle", "stripe", "vodafone", "apple"].includes(user.kindOfSub)) {
+        endOfSub.addClass(user.kindOfSub.toLowerCase());
     } else {
-        backColor = "none";
-        fontColor = "black";
+        endOfSub.addClass("otherProvider")
     }
-    if (user.trial === false) {
-        $("#endOfSub").css("background", backColor);
-        $("#endOfSub").css("border", "none");
-        $("#endOfSub").css("color", fontColor);
-    } else {
-        $("#endOfSub").css("background", "none");
-        $("#endOfSub").css("border", "2px solid " + backColor);
-        $("#endOfSub").css("color", "black");
-    }
+    user.trial ? endOfSub.addClass("trialPeriod") : console.log('Not a trial period');
+
     checkIfZero();
     unsubAll(user.userID)
     goToSupportal(user.userID);

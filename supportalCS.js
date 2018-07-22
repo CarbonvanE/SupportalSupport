@@ -121,6 +121,10 @@ function analyseWebpage(allLines) {
             if (allLines[l + 1] !== "Email settings") {
                 let subList = allLines[l + 1].split(/\t| |, /);
                 allInfo.kindOfSub = subList[1];
+                let allTrials = ["blendlepremium_one_week_auto_renewal", "blendlepremium_one_week_apple", "blendlepremium_vodafone_3_months"]
+                if (allTrials.includes(subList[0])) {
+                    allInfo.trial = true;
+                }
                 if (subList[2] === "Trial") {
                     allInfo.trial = true;
                     allInfo.endOfSub = getDate(subList[5]);

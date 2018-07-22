@@ -107,6 +107,31 @@ td, table{
     text-align: center;
 }
 
+.blendle {
+    background-color: rgb(70,70,70);
+    border: 2px solid rgb(70,70,70);
+    color: white;
+} .stripe {
+    background-color: mediumslateblue;
+    border: 2px solid mediumslateblue;
+    color: white;
+} .vodafone {
+    background-color: red;
+    border: 2px solid red;
+    color: white;
+} .apple {
+    background-color: dodgerblue;
+    border: 2px solid dodgerblue;
+    color: white;
+} .otherProvider {
+    background-color: none;
+    border: none;
+    color: black;
+} .trialPeriod {
+    background-color: whitesmoke;
+    color: black;
+}
+
 #unsubAll {
     font-weight: 400;
     border: solid 1px lightgrey;
