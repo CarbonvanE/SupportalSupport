@@ -9,7 +9,13 @@ const menuItem = chrome.contextMenus.create({
 // Search for the user in Supportal
 function getSupportal(info, tab) {
     // Get selected text and make a URL
-    let selection = info.selectionText;
+    let selection;
+    if (typeof info === "string") {
+        selection = info;
+    } else {
+        selection = info.selectionText;
+    }
+
     copyToClipboard(selection);
     selection = selection.replace(/@/g, "%40");
     selection = selection.replace(/ /g, "+");
@@ -60,29 +66,28 @@ chrome.runtime.onMessage.addListener(
             }
         } else if (request["gotContent"] === false){
             window.alert("Could not find the user!");
-        } else {
-            let usersFound = request["gotContent"];
-            let message = "There were " + usersFound.length + " users found\n\n";
-            for (let i = 0; (i < usersFound.length && i < 20); i++) {
-                message += usersFound[i].split(" ")[0] + "\n";
-            }
-            if (usersFound.length >= 20) {
-                message += "...";
-            }
-            window.alert(message);
+        } else if (request["loadSupportal"] === true) {
+            let mail = request["mail"];
+            getSupportal(mail, window.tabs)
+        } else if (request["goToStripe"] === true) {
+            console.log('stripe')
+            let newURL = "https://dashboard.stripe.com/search?query=" + request["mail"]
+            chrome.tabs.query({}, function(tabs) {
+                let tabID = -1;
+                // Find the last open Supportal tab
+                for (let i = 0; i < tabs.length; i++) {
+                    if (tabs[i]["url"].startsWith("https://dashboard.stripe.com/")) {
+                        chrome.tabs.update(tabs[i]["id"], {url: newURL});
+                        return;
+                    }
+                }
+                // If no Supportal tab is open, open a new tab
+                chrome.tabs.create({url: newURL, active: false});
+                return;
+            });
         }
     }
 )
-
-
-// Check if the reply sent via Zendesk is a public reply or an internal note
-chrome.commands.onCommand.addListener(function(command) {
-    if (command === "checkIfComment") {
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-            chrome.tabs.sendMessage(tabs[0].id, {action: "send_alert"});
-        });
-    }
-});
 
 
 // Open the next Supportal or Zendesk tab
@@ -113,6 +118,7 @@ chrome.commands.onCommand.addListener(function(command) {
         });
     }
 });
+
 
 
 

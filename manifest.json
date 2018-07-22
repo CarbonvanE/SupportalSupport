@@ -25,6 +25,11 @@
             "matches": ["https://supportal2.blendle.io/*"],
             "run_at": "document_end",
             "js": ["supportalCS.js"]
+        },
+        {
+            "matches": ["https://blendle.zendesk.com/agent/tickets/*"],
+            "run_at": "document_end",
+            "js": ["zendeskCS.js"]
         }
     ],
     "icons": {

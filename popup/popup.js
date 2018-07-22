@@ -17,7 +17,7 @@ function updatePopup(user, tab) {
     $("#activeSubs").html(isItSingle(user.activeSubs, "active subscription", ""));
     $("#endOfSub").html(user.endOfSub);
     $("#inactiveSubs").html(isItSingle(user.inactiveSubs, "inactive subscription", ""));
-    !user.isConfirmed ? $("#confirmed").html("Is not yet confirmed") : $("#confirmed").html("");
+    user.isConfirmed ? $("#confirmed").html("") : $("#confirmed").html("Is not yet confirmed");
     user.connectedToFB ? $("#connected").html("Is connected to Facebook") : $("#connected").html("");
     if (user.emailSubs === 0) {
         $("#unsubAll").html("Resub all");

@@ -25,6 +25,7 @@ var allInfo = {
 let allLines = getWebpage();
 if (allInfo["isUser"] === true) {
     analyseWebpage(allLines);
+    goToStripe();
     getStorage();
     setIcon();
     unsubAll();
@@ -255,5 +256,11 @@ function setIcon() {
         allInfo["icon"] = "user-plus";
     } else {
         allInfo["icon"] = "question-circle";
+    }
+}
+
+function goToStripe() {
+    if (allInfo.kindOfSub === "stripe") {
+        chrome.runtime.sendMessage({"goToStripe": true, "mail": allInfo.email});
     }
 }
