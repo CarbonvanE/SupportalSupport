@@ -1,6 +1,5 @@
 window.onload = setInterval(function () {
     let all = document.querySelectorAll("a[href]");
-    let elems = [];
     for (let index = 0; index < all.length; index++) {
         if (all[index]['href'].startsWith("mailto:") === true) {
             let elem = all[index],
