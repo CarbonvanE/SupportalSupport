@@ -36,7 +36,7 @@ function updatePopup(user, tab) {
     let backColor;
     let fontColor;
     if (user.kindOfSub === "blendle") {
-        backColor = "rgb(255, 98, 85)";
+        backColor = "rgb(70,70,70)";
         fontColor = "white";
     } else if (user.kindOfSub === "stripe") {
         backColor = "mediumslateblue";
