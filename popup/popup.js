@@ -2,35 +2,35 @@
 function updatePopup(user, tab) {
     // Change tab color
     for (let i = 1; i <= 7; i++) {
-        document.querySelector(".tab" + i).classList.remove("tabSelected");
+        $(".tab" + i).removeClass("tabSelected");
     }
-    document.querySelector(".tab" + tab).classList.add("tabSelected");
-    document.querySelector("#unsubAll").style.display = "block";
+    $(".tab" + tab).addClass("tabSelected");
+    $("#unsubAll").css("display", "block");
 
     // Change user info that's being displayed
-    document.querySelector("#name").textContent = user.name;
-    document.querySelector("#saldo").textContent = user.saldo;
-    document.querySelector("#userSince").textContent = "User since " + user.signUpDate;
-    document.querySelector("#articlesRead").textContent = isItSingle(user.reads, "article", "read");
-    document.querySelector("#transactions").textContent = isItSingle(user.transactions, "transaction", "");
-    document.querySelector("#emailSubs").textContent = isItSingle(user.emailSubs, "email subscription", "");
-    document.querySelector("#activeSubs").textContent = isItSingle(user.activeSubs, "active subscription", "");
-    document.querySelector("#endOfSub").textContent = user.endOfSub;
-    document.querySelector("#inactiveSubs").textContent = isItSingle(user.inactiveSubs, "inactive subscription", "");
+    $("#name").html(user.name);
+    $("#saldo").html(user.saldo);
+    $("#userSince").html("User since " + user.signUpDate);
+    $("#articlesRead").html(isItSingle(user.reads, "article", "read"));
+    $("#transactions").html(isItSingle(user.transactions, "transaction", ""));
+    $("#emailSubs").html(isItSingle(user.emailSubs, "email subscription", ""));
+    $("#activeSubs").html(isItSingle(user.activeSubs, "active subscription", ""));
+    $("#endOfSub").html(user.endOfSub);
+    $("#inactiveSubs").html(isItSingle(user.inactiveSubs, "inactive subscription", ""));
     if (!user.isConfirmed) {
-        document.querySelector("#confirmed").textContent = "Is not yet confirmed";
+        $("#confirmed").html("Is not yet confirmed");
     } else {
-        document.querySelector("#confirmed").textContent = "";
+        $("#confirmed").html("");
     }
     if (user.connectedToFB) {
-        document.querySelector("#connected").textContent = "Is connected to Facebook";
+        $("#connected").html("Is connected to Facebook");
     } else {
-        document.querySelector("#connected").textContent = "";
+        $("#connected").html("");
     }
     if (user.emailSubs === 0) {
-        document.querySelector("#unsubAll").textContent = "Resub all";
+        $("#unsubAll").html("Resub all");
     } else {
-        document.querySelector("#unsubAll").textContent = "Unsub";
+        $("#unsubAll").html("Unsub");
     }
 
     let backColor;
@@ -52,13 +52,13 @@ function updatePopup(user, tab) {
         fontColor = "black";
     }
     if (user.trial === false) {
-        document.querySelector("#endOfSub").style.background = backColor;
-        document.querySelector("#endOfSub").style.border = "none";
-        document.querySelector("#endOfSub").style.color = fontColor;
+        $("#endOfSub").css("background", backColor);
+        $("#endOfSub").css("border", "none");
+        $("#endOfSub").css("color", fontColor);
     } else {
-        document.querySelector("#endOfSub").style.background = "none";
-        document.querySelector("#endOfSub").style.border = "2px solid " + backColor;
-        document.querySelector("#endOfSub").style.color = "black";
+        $("#endOfSub").css("background", "none");
+        $("#endOfSub").css("border", "2px solid " + backColor);
+        $("#endOfSub").css("color", "black");
     }
     checkIfZero();
     unsubAll(user.userID)
@@ -81,15 +81,15 @@ chrome.storage.local.get(['lastUsers'], function(userList) {
     }
     updatePopup(users[0], 1);
     for (let i = 0; i < displayNames.length; i++) {
-        document.querySelector(".tab" + (i + 1)).innerHTML = `<i class="fas fa-${users[i]["icon"]}"></i>` + displayNames[i];
+        $(".tab" + (i + 1)).html(`<i class="fas fa-${users[i]["icon"]}"></i>` + displayNames[i]);
     }
 });
 
 
 // Change tab when clicked
-document.addEventListener('DOMContentLoaded', function() {
-    let elem = document.querySelector(".scrollMenu");
-    elem.addEventListener('click', function(e) {
+$(document).ready(function() {
+    let elem = $(".scrollMenu");
+    elem.on('click', function(e) {
         let t = e.target;
         chrome.storage.local.get(['lastUsers'], function(userList, t) {
             let users = userList['lastUsers'];
@@ -107,10 +107,10 @@ document.addEventListener('DOMContentLoaded', function() {
 let uID;
 function goToSupportal(userID) {
     uID = userID;
-    let elemSame = document.querySelector(".sameTab");
-    let elemNew = document.querySelector(".newTab");
-    elemSame.addEventListener('click', goToSamePage, true);
-    elemNew.addEventListener('click', goToNewPage, true);
+    let elemSame = $(".sameTab");
+    let elemNew = $(".newTab");
+    elemSame.on('click', goToSamePage);
+    elemNew.on('click', goToNewPage);
 }
 
 
@@ -141,7 +141,7 @@ function goToNewPage(e) {
 
 // Unsubscribe from all newsletters
 function unsubAll(userID) {
-    let elem = document.querySelector("#unsubAll");
+    let elem = $("#unsubAll");
     let isClicked = false;
     chrome.tabs.query({}, function(tabs) {
         let isItTheSamePage = false;
@@ -151,17 +151,17 @@ function unsubAll(userID) {
             let userURL2 = "https://supportal2.blendle.io/user/" + userID
             if (supportalTab["url"] === userURL1 || supportalTab["url"] === userURL2) {
                 isItTheSamePage = true;
-                elem.addEventListener('click', function() {
+                elem.on('click', function() {
                     if (isClicked === false) {
                         chrome.tabs.sendMessage(supportalTab["id"], {unsubAll: userURL1});
-                        document.querySelector("#unsubAll").innerText = "loading...";
+                        $("#unsubAll").html("loading...");
                         isClicked = true;
                     }
                 });
             }
         }
         if (isItTheSamePage === false) {
-            document.querySelector("#unsubAll").style.display = "none";
+            $("#unsubAll").css("display", "none");
         }
     })
 }
