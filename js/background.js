@@ -22,9 +22,9 @@ function getSupportal(info, tab) {
     let newURL = "https://supportal2.blendle.io/search?query=" + selection;
 
     // Find which Supportal tabs are already open
-    chrome.tabs.query({}, function(tabs) {
+    chrome.tabs.query({}, tabs => {
         let tabID = -1;
-        chrome.storage.local.get(['updateTime'], function(t) {
+        chrome.storage.local.get(['updateTime'], t => {
             if (t['updateTime'] === undefined) {
                 chrome.storage.local.set({"updateTime": Date.now()});
                 chrome.tabs.create({ url: newURL });
@@ -33,7 +33,7 @@ function getSupportal(info, tab) {
             // Find the last open Supportal tab
             for (let i = 0; i < tabs.length; i++) {
                 if (tabs[i]["url"].startsWith("https://supportal2.blendle.io/")) {
-                    if (Date.now() - t['updateTime'] > 10000) {
+                    if (Date.now() - t['updateTime'] > 15000) {
                         chrome.tabs.update(tabs[i]["id"], {url: newURL});
                         chrome.storage.local.set({"updateTime": Date.now()});
                         return;
@@ -49,30 +49,29 @@ function getSupportal(info, tab) {
 
 
 // Flicker the icon for a few seconds
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        // Check whether notification permissions have already been granted
-        if (request["gotContent"] === true) {
+chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
+        let contents = request["contents"];
+        if (contents === "Found user") {
+            // Check whether notification permissions have already been granted
             if (Notification.permission === "granted" && "Notification" in window) {
                 chrome.notifications.create("pageHasBeenLoaded", {
                     type: "basic",
-                    iconUrl: chrome.extension.getURL(`icons/users/${request["info"]["icon"]}.png`),
-                    title: request["info"]["email"],
+                    iconUrl: chrome.extension.getURL(`icons/users/${request.info.icon}.png`),
+                    title: request.info.email,
                     message: ""
                 });
-                setTimeout(function() {
+                setTimeout(() => {
                     chrome.notifications.clear("pageHasBeenLoaded");
-                }, 3000);
+                }, 2000);
             }
-        } else if (request["gotContent"] === false){
-            window.alert("Could not find the user!");
-        } else if (request["loadSupportal"] === true) {
+        } else if (contents === "Could not find the user!"){
+            window.alert(contents);
+        } else if (contents === "Load Supportal") {
             let mail = request["mail"];
             getSupportal(mail, window.tabs)
-        } else if (request["goToStripe"] === true) {
-            console.log('stripe')
+        } else if (contents === "Load Stripe") {
             let newURL = "https://dashboard.stripe.com/search?query=" + request["mail"]
-            chrome.tabs.query({}, function(tabs) {
+            chrome.tabs.query({}, tabs => {
                 let tabID = -1;
                 // Find the last open Supportal tab
                 for (let i = 0; i < tabs.length; i++) {
@@ -91,9 +90,9 @@ chrome.runtime.onMessage.addListener(
 
 
 // Open the next Supportal or Zendesk tab
-chrome.commands.onCommand.addListener(function(command) {
+chrome.commands.onCommand.addListener( command => {
     if (command === "goToNextPage") {
-        chrome.tabs.query({}, function(tabs) {
+        chrome.tabs.query({}, tabs => {
             let tabIndex = -1;
             let allTabs = [];
             // Find the last open Supportal tab

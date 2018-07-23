@@ -9,7 +9,7 @@ window.onload = setInterval(function () {
             elem.setAttribute("style", "color: firebrick")
             elem.classList.add("thisEmail");
             elem.addEventListener('click', function() {
-                chrome.runtime.sendMessage({"loadSupportal": true, "mail": mail});
+                chrome.runtime.sendMessage({"contents": "Load Supportal", "mail": mail});
             })
         }
     }

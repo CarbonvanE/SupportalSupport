@@ -29,9 +29,9 @@ if (allInfo["isUser"] === true) {
     getStorage();
     setIcon();
     unsubAll();
-    chrome.runtime.sendMessage({"gotContent": true, "info": allInfo});
+    chrome.runtime.sendMessage({"contents": "Found user", "info": allInfo});
 } else {
-    chrome.runtime.sendMessage({"gotContent": allInfo["isUser"]});
+    chrome.runtime.sendMessage({"contents": "Could not find the user!"});
 }
 
 
@@ -261,6 +261,6 @@ function setIcon() {
 
 function goToStripe() {
     if (allInfo.kindOfSub === "stripe") {
-        chrome.runtime.sendMessage({"goToStripe": true, "mail": allInfo.email});
+        chrome.runtime.sendMessage({"contents": "Load Stripe", "mail": allInfo.email});
     }
 }
