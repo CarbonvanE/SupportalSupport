@@ -186,3 +186,9 @@ td, table{
 .fa-2x {
     color: rgb(70,70,70);
 }
+
+
+
+.settings {
+    display: none;
+}
