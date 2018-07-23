@@ -57,11 +57,6 @@ div.scrollMenu .tabSelected {
     border-radius: 5px;
 }
 
-.upper {
-    display: flex;
-    align-items: center;
-}
-
 .icon {
     margin-right: 10px;
 }

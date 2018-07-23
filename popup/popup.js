@@ -33,7 +33,7 @@ function updatePopup(user, tab) {
     } else {
         endOfSub.addClass("otherProvider")
     }
-    user.trial ? endOfSub.addClass("trialPeriod") : console.log('Not a trial period');
+    user.trial ? endOfSub.addClass("trialPeriod") : null;
 
     checkIfZero();
     unsubAll(user.userID)
@@ -41,51 +41,14 @@ function updatePopup(user, tab) {
 }
 
 
-// Update tabs
-chrome.storage.local.get(['lastUsers'], function(userList) {
-    let users = userList['lastUsers'];
-    console.log(userList);
-    // Create a list with all display names
-    let displayNames = [];
-    for (let u = 0; u < users.length; u++) {
-        if (users[u]['userID'] !== undefined) {
-            displayNames.push(users[u]['userID']);
-        } else {
-            displayNames.push("");
-        }
-    }
-    updatePopup(users[0], 1);
-    for (let i = 0; i < displayNames.length; i++) {
-        $(".tab" + (i + 1)).html(`<i class="fas fa-${users[i]["icon"]}"></i>` + displayNames[i]);
-    }
-});
-
-
-// Change tab when clicked
-$(document).ready(function() {
-    let elem = $(".scrollMenu");
-    elem.on('click', function(e) {
-        let t = e.target;
-        chrome.storage.local.get(['lastUsers'], function(userList, t) {
-            let users = userList['lastUsers'];
-            for (let u = 0; u < users.length; u++) {
-                if (users[u]["userID"] === e.target.textContent) {
-                    updatePopup(users[u], u + 1);
-                }
-            }
-        });
-    });
-});
 
 
 // Get the user ID and open the user in Supportal
 let uID;
 function goToSupportal(userID) {
     uID = userID;
-    let elemSame = $(".sameTab");
-    let elemNew = $(".newTab");
-    elemSame.on('click', goToSamePage);
-    elemNew.on('click', goToNewPage);
+    $(".sameTab").on('click', goToSamePage);
+    $(".newTab").on('click', goToNewPage);
 }
 
 
@@ -116,14 +79,14 @@ function goToNewPage(e) {
 
 // Unsubscribe from all newsletters
 function unsubAll(userID) {
-    let elem = $("#unsubAll");
-    let isClicked = false;
+    let elem = $("#unsubAll"),
+        isClicked = false;
     chrome.tabs.query({}, function(tabs) {
         let isItTheSamePage = false;
         for (let i = 0; i < tabs.length; i++) {
-            let supportalTab = tabs[i];
-            let userURL1 = "https://supportal2.blendle.io/user/" + userID + "#"
-            let userURL2 = "https://supportal2.blendle.io/user/" + userID
+            let supportalTab = tabs[i],
+                userURL1 = "https://supportal2.blendle.io/user/" + userID + "#",
+                userURL2 = "https://supportal2.blendle.io/user/" + userID;
             if (supportalTab["url"] === userURL1 || supportalTab["url"] === userURL2) {
                 isItTheSamePage = true;
                 elem.on('click', function() {
@@ -163,3 +126,35 @@ function isItSingle(value, str1, str2) {
         return value + " " + str1 + " " + str2;
     }
 }
+
+
+
+$(document).ready(function() {
+    // Change tab when clicked
+    let elem = $(".scrollMenu");
+    elem.on('click', function(e) {
+        let t = e.target;
+        chrome.storage.local.get(['lastUsers'], function(userList, t) {
+            let users = userList['lastUsers'];
+            for (let u = 0; u < users.length; u++) {
+                if (users[u]["userID"] === e.target.textContent) {
+                    updatePopup(users[u], u + 1);
+                }
+            }
+        });
+    });
+
+    // Update tabs
+    chrome.storage.local.get(['lastUsers'], function(userList) {
+        let users = userList['lastUsers'];
+        console.log(userList);
+        // Create a list with all display names
+        let displayNames = users.map(user => {
+            return (user.userID !== undefined) ? user.userID : ""
+        });
+        updatePopup(users[0], 1);
+        for (let i = 0; i < displayNames.length; i++) {
+            $(".tab" + (i + 1)).html(`<i class="fas fa-${users[i]["icon"]}"></i>` + displayNames[i]);
+        }
+    });
+});
