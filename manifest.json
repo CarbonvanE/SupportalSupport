@@ -53,7 +53,7 @@
               "default": "Ctrl+X",
               "mac": "MacCtrl+X"
             },
-            "description": "Go to next Supportal or Zendesk tab"
+            "description": "Go to next Supportal, Zendesk, or Stripe tab"
         }
     }
 }

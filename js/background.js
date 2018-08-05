@@ -51,39 +51,40 @@ function getSupportal(info, tab) {
 // Flicker the icon for a few seconds
 chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
         let contents = request["contents"];
-        if (contents === "Found user") {
-            // Check whether notification permissions have already been granted
-            if (Notification.permission === "granted" && "Notification" in window) {
-                chrome.notifications.create("pageHasBeenLoaded", {
-                    type: "basic",
-                    iconUrl: chrome.extension.getURL(`icons/users/${request.info.icon}.png`),
-                    title: request.info.email,
-                    message: ""
-                });
-                setTimeout(() => {
-                    chrome.notifications.clear("pageHasBeenLoaded");
-                }, 2000);
-            }
-        } else if (contents === "Could not find the user!"){
-            window.alert(contents);
-        } else if (contents === "Load Supportal") {
-            let mail = request["mail"];
-            getSupportal(mail, window.tabs)
-        } else if (contents === "Load Stripe") {
-            let newURL = "https://dashboard.stripe.com/search?query=" + request["mail"]
-            chrome.tabs.query({}, tabs => {
-                let tabID = -1;
-                // Find the last open Supportal tab
-                for (let i = 0; i < tabs.length; i++) {
-                    if (tabs[i]["url"].startsWith("https://dashboard.stripe.com/")) {
-                        chrome.tabs.update(tabs[i]["id"], {url: newURL});
-                        return;
-                    }
+        switch (contents) {
+            case "Found user":
+                // Check whether notification permissions have already been granted
+                if (Notification.permission === "granted" && "Notification" in window) {
+                    chrome.notifications.create("pageHasBeenLoaded", {
+                        type: "basic",
+                        iconUrl: chrome.extension.getURL(`icons/users/${request.info.icon}.png`),
+                        title: request.info.email,
+                        message: ""
+                    });
+                    setTimeout(() => {
+                        chrome.notifications.clear("pageHasBeenLoaded");
+                    }, 2000);
                 }
-                // If no Supportal tab is open, open a new tab
-                chrome.tabs.create({url: newURL, active: false});
-                return;
-            });
+            case "Could not find the user!":
+                window.alert(contents);
+            case "Load Supportal":
+                let mail = request["mail"];
+                getSupportal(mail, window.tabs)
+            case "Load Stripe":
+                let newURL = "https://dashboard.stripe.com/search?query=" + request["mail"]
+                chrome.tabs.query({}, tabs => {
+                    let tabID = -1;
+                    // Find the last open Supportal tab
+                    for (let i = 0; i < tabs.length; i++) {
+                        if (tabs[i]["url"].startsWith("https://dashboard.stripe.com/")) {
+                            chrome.tabs.update(tabs[i]["id"], {url: newURL});
+                            return;
+                        }
+                    }
+                    // If no Supportal tab is open, open a new tab
+                    chrome.tabs.create({url: newURL, active: false});
+                    return;
+                });
         }
     }
 )
@@ -92,7 +93,7 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 // Open the next Supportal or Zendesk tab
 chrome.commands.onCommand.addListener( command => {
     if (command === "goToNextPage") {
-        chrome.tabs.query({}, tabs => {
+        chrome.tabs.query({'lastFocusedWindow': true}, tabs => {
             let tabIndex = -1;
             let allTabs = [];
             // Find the last open Supportal tab
@@ -109,10 +110,16 @@ chrome.commands.onCommand.addListener( command => {
                 allTabs.push(tabs[k]);
             }
             for (let k = 0; k < allTabs.length; k++) {
-                if (allTabs[k]["url"].startsWith("https://supportal2.blendle.io/") || allTabs[k]["url"].startsWith("https://blendle.zendesk.com/") || allTabs[k]["url"].startsWith("https://supportal.blendle.io/")) {
-                    chrome.tabs.update(allTabs[k]["id"], {"active": true});
-                    return;
-                };
+                const links = ["https://supportal2.blendle.io/",
+                                "https://blendle.zendesk.com/",
+                                "https://supportal.blendle.io/",
+                                "https://dashboard.stripe.com/"]
+                for (link of links) {
+                    if (allTabs[k]["url"].startsWith(link)) {
+                        chrome.tabs.update(allTabs[k]["id"], {"active": true});
+                        return;
+                    };
+                }
             }
         });
     }
