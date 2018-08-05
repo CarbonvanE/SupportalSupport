@@ -5,7 +5,6 @@ function updatePopup(user, tab) {
         $(".tab" + i).removeClass("tabSelected");
     }
     $(".tab" + tab).addClass("tabSelected");
-    $("#unsubAll").css("display", "block");
 
     // Change user info that's being displayed
     $("#name").html(user.name);
@@ -19,11 +18,6 @@ function updatePopup(user, tab) {
     $("#inactiveSubs").html(isItSingle(user.inactiveSubs, "inactive subscription", ""));
     user.isConfirmed ? $("#confirmed").html("") : $("#confirmed").html("Is not yet confirmed");
     user.connectedToFB ? $("#connected").html("Is connected to Facebook") : $("#connected").html("");
-    if (user.emailSubs === 0) {
-        $("#unsubAll").html("Resub all");
-    } else {
-        $("#unsubAll").html("Unsub");
-    }
 
     // Change the appearance of the "end of subscription" button
     let endOfSub = $("#endOfSub");
@@ -36,7 +30,6 @@ function updatePopup(user, tab) {
     user.trial ? endOfSub.addClass("trialPeriod") : null;
 
     checkIfZero();
-    unsubAll(user.userID)
     goToSupportal(user.userID);
 }
 
@@ -74,34 +67,6 @@ function goToSamePage(e) {
 function goToNewPage(e) {
     let newURL = "https://supportal2.blendle.io/user/" + uID;
     chrome.tabs.create({ url: newURL });
-}
-
-
-// Unsubscribe from all newsletters
-function unsubAll(userID) {
-    let elem = $("#unsubAll"),
-        isClicked = false;
-    chrome.tabs.query({}, function(tabs) {
-        let isItTheSamePage = false;
-        for (let i = 0; i < tabs.length; i++) {
-            let supportalTab = tabs[i],
-                userURL1 = "https://supportal2.blendle.io/user/" + userID + "#",
-                userURL2 = "https://supportal2.blendle.io/user/" + userID;
-            if (supportalTab["url"] === userURL1 || supportalTab["url"] === userURL2) {
-                isItTheSamePage = true;
-                elem.on('click', function() {
-                    if (isClicked === false) {
-                        chrome.tabs.sendMessage(supportalTab["id"], {unsubAll: userURL1});
-                        $("#unsubAll").html("loading...");
-                        isClicked = true;
-                    }
-                });
-            }
-        }
-        if (isItTheSamePage === false) {
-            $("#unsubAll").css("display", "none");
-        }
-    })
 }
 
 

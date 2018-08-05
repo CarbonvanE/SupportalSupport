@@ -94,7 +94,6 @@ td, table{
     justify-content: space-between;
 }
 
-#unsubAll,
 #endOfSub {
     border-radius: 3px;
     padding: 0 5px;
@@ -127,19 +126,6 @@ td, table{
     color: black;
 }
 
-#unsubAll {
-    font-weight: 400;
-    border: solid 1px lightgrey;
-    color: rgb(150,150,150);
-    display: none;
-}
-
-#unsubAll:hover {
-    cursor: pointer;
-    background-color: grey;
-    border: solid 1px grey;
-    color: whitesmoke;
-}
 
 
 /* Open supportal options */
