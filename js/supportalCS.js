@@ -243,14 +243,18 @@ function getDate(date) {
 
 
 function setIcon() {
-    if (allInfo.productState === "premium_only") {
-        allInfo["icon"] = "user"
-    } else if (allInfo.productState === "micropayments") {
-            allInfo["icon"] = "user-tag"
-    } else if (allInfo.productState === "premium_and_micropayments") {
-            allInfo["icon"] = "user-astronaut"
-    } else if (allInfo.productState === "upsell_only") {
-            allInfo["icon"] = "user-slash"
+    switch (allInfo.productState) {
+        case "premium_only":
+            allInfo["icon"] = "user";
+            break;
+        case "micropayments":
+            allInfo["icon"] = "user-tag";
+            break;
+        case "premium_and_micropayments":
+            allInfo["icon"] = "user-astronaut";
+            break;
+        case "upsell_only":
+            allInfo["icon"] = "user-slash";
     }
 }
 
