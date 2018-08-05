@@ -1,4 +1,4 @@
-var allInfo = {
+let allInfo = {
     isUser: "",
     userID: "",
     uuid: "",
@@ -6,6 +6,7 @@ var allInfo = {
     saldo: "",
     email: "",
     isConfirmed: false,
+    productState: "",
     country: "",
     signUpDate: " a while ago?",
     reads: "",
@@ -99,6 +100,10 @@ function analyseWebpage(allLines) {
             if (emailAndBool.split(' ')[1] === "Confirmed") {
                 allInfo.isConfirmed = true;
             }
+        } else if (line.startsWith("Product")) {
+            let productState = line.split('\t')[1];
+            productState = productState.substring(0, productState.length - 6)
+            allInfo.productState = productState;
         } else if (line.startsWith("Country") && allInfo.country === "") {
             allInfo.country = line.split('\t')[1];
         } else if (line.startsWith("Facebook") && allInfo.connectedToFB === "") {
@@ -238,24 +243,14 @@ function getDate(date) {
 
 
 function setIcon() {
-    if (allInfo.reads > 500) {
-        allInfo["icon"] = "user-astronaut";
-    } else if (allInfo.reads < 5) {
-        allInfo["icon"] = "child";
-    } else if (allInfo.isConfirmed === false) {
-        allInfo["icon"] = "user-slash";
-    } else if (allInfo.trial === true) {
-        allInfo["icon"] = "user-graduate";
-    } else if (allInfo.activeSubs > 0 && allInfo.inactiveSubs > 0) {
-        allInfo["icon"] = "user-shield";
-    } else if (allInfo.activeSubs === 0 && allInfo.inactiveSubs > 1) {
-        allInfo["icon"] = "user-times";
-    } else if (allInfo.activeSubs === 0 && allInfo.inactiveSubs === 1) {
-        allInfo["icon"] = "user-minus";
-    } else if (allInfo.transactions > 0) {
-        allInfo["icon"] = "user-plus";
-    } else {
-        allInfo["icon"] = "question-circle";
+    if (allInfo.productState === "premium_only") {
+        allInfo["icon"] = "user"
+    } else if (allInfo.productState === "micropayments") {
+            allInfo["icon"] = "user-tag"
+    } else if (allInfo.productState === "premium_and_micropayments") {
+            allInfo["icon"] = "user-astronaut"
+    } else if (allInfo.productState === "upsell_only") {
+            allInfo["icon"] = "user-slash"
     }
 }
 
