@@ -65,11 +65,14 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
                         chrome.notifications.clear("pageHasBeenLoaded");
                     }, 2000);
                 }
+                break;
             case "Could not find the user!":
                 window.alert(contents);
+                break;
             case "Load Supportal":
                 let mail = request["mail"];
                 getSupportal(mail, window.tabs)
+                break;
             case "Load Stripe":
                 let newURL = "https://dashboard.stripe.com/search?query=" + request["mail"]
                 chrome.tabs.query({}, tabs => {
