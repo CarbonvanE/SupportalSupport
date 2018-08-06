@@ -16,4 +16,9 @@ Simple Chrome extension to simplify searching in the Supportal database.
 5. When the page is loaded a notification will appear in the upper right corner
 6. If the user has a Premium subscription via Stripe the extension will look for this user in Stripe
 7. Click the icon in the toolbar (or press `Ctr + Z`) to get a summary of the user
-8. Press `Ctr + X` to go to the Supportal tab
+
+![Popup display]['popup.png']
+
+
+## Tips
+- Press `Ctr + X` to go to the Supportal tab
