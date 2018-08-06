@@ -17,7 +17,7 @@ Simple Chrome extension to simplify searching in the Supportal database.
 6. If the user has a Premium subscription via Stripe the extension will look for this user in Stripe
 7. Click the icon in the toolbar (or press `Ctr + Z`) to get a summary of the user
 
-![Popup display]['popup.png']
+![Popup display][popup.png "Popup display"]
 
 
 ## Tips
